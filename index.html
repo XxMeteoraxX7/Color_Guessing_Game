@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <script src="https://kit.fontawesome.com/388639b1e6.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Color Guessing Game</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            padding:0;
+            color: rgb(255, 255, 255);
+        }
+        
+        html,body {
+            margin:0;
+            }
+        
+        body {
+            background: linear-gradient(darkblue, rgb(116, 202, 231), darkblue);
+            font-family: "Open Sans", sans-serif;
+            width: 100%;
+            position: relative;
+        }
+        
+        header {
+            max-width: 100%;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            line-height: 4rem;
+            position: relative;
+        }
+
+
+        button {
+            background-color: black;
+            padding: 2rem;
+            border: .1rem groove white;
+            font-size: 1.5rem;
+        }
+
+        section {
+            min-width: fit-content;
+            max-width: fit-content;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        section h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            text-shadow: .65rem .65rem .55rem black;
+            background: black;
+        }
+        
+        .aecp-banner {
+            width: 100%;
+        }
+
+        a {
+            color: yellow;
+        }
+        a:hover {
+            background: black;
+        }
+        
+        #contact {
+        margin-left: auto;
+        margin-right: auto;
+            border: .125rem groove white;
+            line-height: 3em;
+            background: radial-gradient(darkblue, black);
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+        
+        #contact h3 {
+            text-align: center;
+            font-size: 2rem;
+            text-decoration: underline;
+        }
+        
+        #contact ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+        }
+        
+        #contact li {
+            display: inline-block;
+            width: 33.3333333333%;
+            margin-right: -.25rem;
+            font-size: 1.4rem;
+        }
+        
+        #contact a {
+            display: block;
+            text-decoration: none;
+        }
+        
+        #contact p {
+            border: none;
+            padding: 0;
+            margin: 0;
+            line-height: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+    <img class="aecp-banner" src="/img/AECP-banner.png" onerror="this.src='//cdn.cp.adobe.io/content/2/dcx/08ba5394-3d3a-4dbf-bc53-f2081e16e46e/rendition/preview.jpg/version/0/format/jpg/dimension/width/size/1200'" alt="Banner to website"/>
+    </header>
+
+    <section>
+    <h1>Color Guessing Game</h1>
+    <button type="button" onclick="runGame()">Start Game</button>
+    </section>
+
+    <footer id="contact">
+        <h3>Contact and/or Connect With Me:</h2>
+        <ul>
+            <li><a href="https://github.com/XxMeteoraxX7" target="_blank"><i class="fa-brands fa-github"></i> GitHub</a>
+            </li>
+            <li><a href="https://www.codewars.com/users/Xxmeteoraxx7" target="_blank"><i class="fa-solid fa-code"></i>
+                    CodeWars</a></li>
+            <li><a href="https://www.linkedin.com/in/adameidson-xxmeteoraxx7/" target="_blank"> <i
+                        class="fa-brands fa-linkedin"></i> LinkedIn</a></li>
+            <li><a href="https://adam-eidson.slack.com" target="blank"><i class="fa-brands fa-slack"></i> Slack</a></li>
+            <li><a href="mailto: AdamEidson1992@gmail.com"><i class="fa-solid fa-envelope-circle-check"></i> Gmail</a>
+            <li><a href="https://us05web.zoom.us/j/5586462983?pwd=VjVNdS8rdzVrYndZcEFacUJDVWQyZz09"><i
+                        class="fa-solid fa-video"></i> Zoom</a></li>
+            <ul>
+            <p>Content Created and Developed by: Adam S. Eidson. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+
+        const COLORS_ARRAY = ['cyan', 'blue', 'gold', 'gray', 'green', 'magenta', 'orange', 'red', 'white', 'yellow'];
+        let numTries = 0;
+
+        function runGame() {
+
+            let guess = '';
+            let correct = false;
+            const targetIndex = Math.floor(Math.random() * COLORS_ARRAY.length);
+            const target = COLORS_ARRAY[targetIndex];
+            console.log(target);
+
+            do {
+                guess = prompt('I am thinking of one of these colors:\n\n' + COLORS_ARRAY.sort().join(', ') + '\n\nWhat color am I thinking of?\n');
+
+                if (guess === null) {
+                    alert('If you insist on not playing any longer I won\'t force you. Goodbye.');
+                    numTries = 0;
+                    return;
+                }
+
+                guess = guess.toLowerCase();
+                console.log(guess);
+                numTries += 1;
+                correct = checkGuess(guess, target);
+                console.log(correct);
+
+            } while (!correct);
+                alert('Congratulations! You\'ve guessed the color!\n\nIt took you ' + numTries + ' tries to guess correctly.');
+                document.body.style.background = guess;
+                numTries = 0;
+        }
+
+        function checkGuess(guess, target) {
+
+            let correct = false;
+
+            if (!COLORS_ARRAY.includes(guess)) {
+                alert('This answer is not one of the options available. Please try again.\n\nAttempts so far: ' + numTries);
+
+            } else if (guess > target || guess < target) {
+                alert('Please try again, this is an incorrect answer.\n\nAttempts so far: ' + numTries);
+                
+            } else {
+                correct = true;
+            }
+            return correct;
+        }
+
+    </script>
+
+</body>
+</html>
